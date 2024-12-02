@@ -1,0 +1,10 @@
+[workspace]
+members = ["day01", "util"]
+resolver = "2"
+
+[package]
+name = "advent_of_code_2024"
+
+[dependencies]
+day01 = {path = "day01"}
+util = {path = "util"}
