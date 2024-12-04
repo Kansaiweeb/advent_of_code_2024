@@ -6,7 +6,10 @@ pub fn solution(file_name: &str) -> (String, String) {
     let input = read_input(&format!("./day01/{}", file_name)).unwrap();
     let input = input.trim();
     let data = ParsedData::from_str(&input).unwrap();
-    (data.total_distance().to_string(), data.similarity().to_string())
+    (
+        data.total_distance().to_string(),
+        data.similarity().to_string(),
+    )
 }
 
 struct ParsedData {
@@ -17,11 +20,18 @@ struct ParsedData {
 
 impl ParsedData {
     pub fn total_distance(&self) -> u32 {
-        self.left_list.iter().zip(self.right_list.iter()).map(|(&l, &r)| r.abs_diff(l)).sum()
+        self.left_list
+            .iter()
+            .zip(self.right_list.iter())
+            .map(|(&l, &r)| r.abs_diff(l))
+            .sum()
     }
 
     pub fn similarity(&self) -> u32 {
-        self.left_list.iter().map(|element| element * self.right_frequencies.get(element).unwrap_or(&0)).sum()
+        self.left_list
+            .iter()
+            .map(|element| element * self.right_frequencies.get(element).unwrap_or(&0))
+            .sum()
     }
 }
 
@@ -38,9 +48,9 @@ impl FromStr for ParsedData {
                 (left, right)
             })
             .collect();
-        let mut right_frequencies: HashMap<u32, u32>= HashMap::new();
+        let mut right_frequencies: HashMap<u32, u32> = HashMap::new();
         for value in &right_list {
-            *right_frequencies.entry(*value).or_default() +=1;
+            *right_frequencies.entry(*value).or_default() += 1;
         }
         left_list.sort();
         right_list.sort();
@@ -48,7 +58,7 @@ impl FromStr for ParsedData {
         Ok(ParsedData {
             left_list,
             right_list,
-            right_frequencies
+            right_frequencies,
         })
     }
 }
